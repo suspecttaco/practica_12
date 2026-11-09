@@ -13,6 +13,8 @@ class PokeViewModel : ViewModel() {
 
     var types = mutableStateOf<List<NamedResource>>(emptyList())
     var pokemonsByType = mutableStateOf<List<NamedResource>>(emptyList())
+    var isLoadingTypes = mutableStateOf(true)
+    var isLoadingPokemons = mutableStateOf(false)
     var pokemonDetail = mutableStateOf<PokemonDetailResponse?>(null)
 
     init {
@@ -20,15 +22,23 @@ class PokeViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 types.value = repository.getTypes()
-            } catch (e: Exception) { }
+            } catch (e: Exception) {
+            } finally {
+                isLoadingTypes.value = false
+            }
         }
     }
 
     fun loadPokemonsByType(id: String) {
+        pokemonsByType.value = emptyList()
+        isLoadingPokemons.value = true
         viewModelScope.launch {
             try {
                 pokemonsByType.value = repository.getPokemonsByType(id)
-            } catch (e: Exception ) { }
+            } catch (e: Exception ) {
+            } finally {
+                isLoadingPokemons.value = false
+            }
         }
     }
 

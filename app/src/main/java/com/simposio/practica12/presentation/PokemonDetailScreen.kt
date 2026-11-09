@@ -2,6 +2,8 @@ package com.simposio.practica12.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -41,7 +43,7 @@ fun getColorByType(type: String): Color {
         "fighting", "rock", "ground" -> Color(0xFFC03028)
         "fairy" -> Color(0xFFEE99AC)
         "dark" -> Color(0xFF705848)
-        "steel" -> Color(0x00BEBED0)
+        "steel" -> Color(0xFFBEBED0)
         "dragon" -> Color(0xFF7038F8)
         else -> Color(0xFFA8A878)
     }
@@ -64,12 +66,12 @@ fun PokemonDetailScreen(viewModel: PokeViewModel, pokeId: String) {
 
         // Fondo
         Box(
-            modifier = Modifier.fillMaxSize().background(Color.DarkGray).padding(24.dp),
+            modifier = Modifier.fillMaxSize().background(Color.DarkGray).verticalScroll(rememberScrollState()).padding(24.dp),
             contentAlignment = Alignment.Center
         ) {
             // Diseñar carta dinamica
             Card(
-                modifier = Modifier.fillMaxWidth().aspectRatio(0.7f),
+                modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(containerColor = cardColor),
                 elevation = CardDefaults.cardElevation(16.dp),
                 shape = RoundedCornerShape(12.dp)
@@ -97,7 +99,7 @@ fun PokemonDetailScreen(viewModel: PokeViewModel, pokeId: String) {
                     val imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png"
 
                     Box(
-                        modifier = Modifier.fillMaxWidth().weight(1f)
+                        modifier = Modifier.fillMaxWidth().aspectRatio(1f)
                             .clip(RoundedCornerShape(4.dp))
                             .background(Color.White)
                             .border(6.dp, Color(0xFFC0C0C0),
